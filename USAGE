@@ -1,0 +1,21 @@
+# Multi-tenant (needs X-Scope-OrgID header)
+./bootstrap-loki.sh --install
+
+# Single-tenant (no header needed)
+SINGLE_TENANT=true ./bootstrap-loki.sh --install
+
+# Remove everything
+./bootstrap-loki.sh --uninstall
+
+#Curl Test
+
+Multi-tenant:
+
+curl -s -H 'X-Scope-OrgID: tenant1' \
+  'http://127.0.0.1:3100/loki/api/v1/query?query=%7Bnamespace%3D%22loki%22%7D' | head
+
+
+Single-tenant:
+
+curl -s \
+  'http://127.0.0.1:3100/loki/api/v1/query?query=%7Bnamespace%3D%22loki%22%7D' | head

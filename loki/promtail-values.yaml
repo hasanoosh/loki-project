@@ -1,0 +1,11 @@
+config:
+  clients:
+    - url: http://loki-gateway.loki.svc.cluster.local/loki/api/v1/push
+      tenant_id: tenant1
+  snippets:
+    pipelineStages:
+      - cri: {}                   # parse containerd/cri logs
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi

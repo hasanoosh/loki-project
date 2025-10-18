@@ -1,0 +1,26 @@
+adminUser: admin
+adminPassword: admin123  # change later
+
+# Make Grafana talk to your Loki gateway and pass the tenant header
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Loki
+        type: loki
+        access: proxy
+        isDefault: true
+        url: http://loki-gateway.loki.svc.cluster.local
+        jsonData:
+          timeout: 60
+          httpHeaderName1: X-Scope-OrgID
+        secureJsonData:
+          httpHeaderValue1: tenant1
+
+service:
+  type: ClusterIP
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
